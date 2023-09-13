@@ -1,0 +1,8 @@
+.vscode
+.idea
+
+resources.py
+__pycache__
+
+make_icon
+README.txt

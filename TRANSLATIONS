@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS><TS version="2.0">
+<context>
+    <name>TimeEditor</name>
+    <message>
+        <location filename="time_editor.py" line="567"/>
+        <source>&amp;TimeEditor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="183"/>
+        <source>Time Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="191"/>
+        <source>Time Split Features</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="202"/>
+        <source>Time Expand Features</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="211"/>
+        <source>Inspect Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="220"/>
+        <source>Filter Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="239"/>
+        <source>Filter Features to Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="239"/>
+        <source>Year: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="444"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="280"/>
+        <source>You need to select at least one feature to start editing the lifespan. Select and press Ctrl+E.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="309"/>
+        <source>The supplied value ({date_str}) exceeds the life_end value ({life_end}) of the feature (ID: {_id})</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="316"/>
+        <source>The supplied value ({date_str}) preceeds the life_start value ({life_start}) of the feature (ID: {_id})</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="328"/>
+        <source>Warning: the selected features have different values for {value_type}. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="328"/>
+        <source>Click OK to proceeed, or cancel to review the attributes of the selected features.
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="331"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="339"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="339"/>
+        <source>The operation could not be executed, the following {num} critical errors occurred:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="420"/>
+        <source>Before you start, you need to set some information on the field names for time, documentation and common id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="444"/>
+        <source>You need to select excactly two features to edit (currently {num}. Select two features and press Strg+T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="507"/>
+        <source>ERROR: No adjacent date feature found for {_id}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="553"/>
+        <source>Copied and reset date value ({date}) on {copy_cnt} out of {num} selected Features.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="455"/>
+        <source>Error: Entered Date ({date_text}): {validation_msg}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor.py" line="474"/>
+        <source>The date you entered ({date_text}) does not match the lifespan of the feature (id={_id}, {start} - {end}). Aborting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimeEditorInspectDialog</name>
+    <message>
+        <location filename="time_editor_inspect_dialog.py" line="100"/>
+        <source>All features are valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="time_editor_inspect_dialog.py" line="105"/>
+        <source>WORKER ERROR: {err}</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimeEditorInspectionWorker</name>
+    <message>
+        <location filename="time_editor_inspection_worker.py" line="93"/>
+        <source>Found missing date history in feature with id {id} value {common_id_val}</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+</TS>

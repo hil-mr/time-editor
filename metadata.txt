@@ -1,0 +1,75 @@
+# This file contains metadata for your plugin.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=TimeEditor
+qgisMinimumVersion=3.16
+description=Used to facilitate the editing of features with lifespan information
+version=0.4.6
+author=Niklas Alt
+email=niklas.alt [at] uni-marburg.de
+
+about=This Plugin aims to facilitate working with time dependent vector data. Assuming you have geodata with a life span as an attribute. Features are automatic duplication and editing, filtering and more
+
+tracker=https://github.com/hil-mr/time-editor/issues
+repository=https://github.com/hil-mr/time-editor
+# End of mandatory metadata
+
+# Recommended items:
+
+hasProcessingProvider=no
+# Uncomment the following line and add your changelog:
+changelog=0.4.6: Fix: Integrity checks fully support expressions
+    0.4.5.1: Missed label for new UI Element
+    0.4.5: Replace hard coded min threshold for spatial integrity checks with UI value (double spin box)
+    0.4.4: Fix hide layer after edit / log timesplit to documentation (ids of original items)
+    0.4.3: Fix: reset UI and kill worker and thread as integrity check dropdown changes
+    0.4.2: Fix: Clear the UI every time integrity check starts
+    0.4.1: Fix: check if layer is not in edit mode before integrity check dialog (standard error dialog)
+    0.4.0: Allow expressions in integrity check to allow limiting the affected features; Fixed spatial intersection bug
+    0.3.8: Added sidecar output for CSV (allowing drag and drop)
+    0.3.7: Fixed updating geometry if valid_end date matches split date
+    0.3.7-rc: Working temporary layer edit, remaining bug for existing date set
+    0.3.6: Burst Geometry Collections into Multipolygons (ignoring linestrings)
+    0.3.5: Export Geometry Intersections to CSV as WKT
+    0.3.4: Abort Time integrity on invalid dates 
+    0.3.3: Display message at end of all operations (if nothing found)
+    0.3.2: Correct date expansion on Timesplit (expand to date before selection)
+    0.3.1: Reselect features after spatial validity check has finished
+    0.3.0: Better error reporting in Table Widget (including export to csv)
+    0.2.9: Bug fix core dump after aborting the worker
+    0.2.8: Performance boost from iterating only within bounding box
+    0.2.7: Integrity Checks for overlapping Features (needs performance boost from GeometryEngine)
+    0.2.6: Integrity Checks for geometric validity (using .isGeosValid())
+    0.2.5: Integrity Check for individual dates (no empty strings, no invalid dates)
+    0.2.4: Progressbar works again
+    0.2.3: If features are selected, run integrity check only on those
+    0.2.2: Take NULL values in to account in layer filter 
+        Fix Division by zero for small feature sets
+        Time Split works again
+    0.2.1: Handle no selected vector layer and give an error hint
+
+# Tags are comma separated with spaces allowed
+tags=python
+
+homepage=http://homepage
+category=Vector
+icon=icon.png
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
+# Since QGIS 3.8, a comma separated list of plugins to be installed
+# (or upgraded) can be specified.
+# Check the documentation for more information.
+# plugin_dependencies=
+
+Category of the plugin: Raster, Vector, Database or Web
+category=Vector
+
+# If the plugin can run on QGIS Server.
+server=False
+
