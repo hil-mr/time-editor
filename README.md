@@ -1,11 +1,23 @@
 # Time Editor (QGIS Plugin)
 
-Time Editor is a [QGIS]-plugin to facilitate the editing of geometric features with 
+Time Editor is a [QGIS](https://qgis.org/)-plugin to facilitate the editing of geometric features with 
 time information encoded in its attributes. It provides workflows for editing and 
 functions to check the spatial and temporal topology. 
 
 It is developed at the [Hessische Institut für Landesgeschichte](https://hil.hessen.de) in 
 order to reconstruct historical administrative boundaries. 
+
+## Installation 
+
+You can install the plugin via the official QGIS repository. Currently the plugin is still 
+flagged as experimental so you will need to check the box in the settings to find it:
+
+![](doc_images/installation-experimental.png)
+
+Now you can find the plugin by searching "TimeEditor" (no spaces) in the QGIS repository. 
+
+![](doc_images/installation-dialog.png)
+
 
 ## How to use
 
