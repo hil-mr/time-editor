@@ -6,7 +6,7 @@
 name=TimeEditor
 qgisMinimumVersion=3.16
 description=Used to facilitate the editing of features with lifespan information
-version=0.4.6
+version=0.4.7
 author=Niklas Alt
 email=niklas.alt [at] uni-marburg.de
 
@@ -20,7 +20,8 @@ repository=https://github.com/hil-mr/time-editor
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=0.4.6: Fix: Integrity checks fully support expressions
+changelog=0.4.7: Fix: correct type of Text Values to QVariant, failed on second edit on already edited feature
+    0.4.6: Fix: Integrity checks fully support expressions
     0.4.5.1: Missed label for new UI Element
     0.4.5: Replace hard coded min threshold for spatial integrity checks with UI value (double spin box)
     0.4.4: Fix hide layer after edit / log timesplit to documentation (ids of original items)

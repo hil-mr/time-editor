@@ -771,13 +771,16 @@ class TimeEditor:
                     tmp_layer.getFeature(geom_dict[i]).geometry())
                 layer_data_provider.addFeatures([copied_feature])
             feature_id_info = ":".join([str(_id) for _id in edited_features])
+            documentation_str = ""
             documentation_content = original_feature.attributes()[documentation_idx]
-            if (documentation_content is None):
-                documentation_content = ""
-            if (str(documentation_content.value()).strip() != ""):
-                documentation_content = str(documentation_content.value()) + "\n"
-            documentation_content += f'timesplit@{feature_id_info}'
-            layer.changeAttributeValue(i, documentation_idx, documentation_content)
+            # TODO: read up on str vs. QVariant and write get and write function
+            if (documentation_content is not None):
+                if isinstance(documentation_content, QVariant):
+                    documentation_str = str(documentation_content.value()).strip()
+            if documentation_str.strip() != "":
+                documentation_str = documentation_str + "\n"
+            documentation_str += f'timesplit@{feature_id_info}'
+            layer.changeAttributeValue(i, documentation_idx, QVariant(documentation_str))
         layer.commitChanges()
 
         if self.current_time_split_config.tmp_layer:
