@@ -243,15 +243,32 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                 if self.killed:
                     return
 
-                self.message.emit(self.tr("Checking timestamp ") + date + "\n")
+                self.message.emit(self.tr("Checking timestamp ") + date)
                 self.progress.emit(round(date_idx / len(all_dates) * 100))
                 filter_str = self.date_helper.build_filter_string(
                     self.layer, date)
                 filter_str += f"""\n AND "fid" in ({initial_id_selection_str})"""
                 self.layer.setSubsetString(filter_str)
                 self.refreshMap.emit()
+                
                 # get all currently selected features due to the layer filter
                 curr_selected_feature_ids = [feature.id() for feature in self._get_all_features()]
+                # in some cases the processing of the layer substring is apparently not 
+                # ready and all initial (selected) features will be returned leading 
+                # to a lot of intersections
+                # Ideally we would have a signal to listen to, that the filter has been fully applied
+                # For now we compare the numbers and repeat the loop until the subset has been applied
+                tries = 0
+                while len(curr_selected_feature_ids) == len(all_features):
+                    time.sleep(1)
+                    curr_selected_feature_ids = [feature.id() for feature in self._get_all_features()]
+                    tries += 1
+                    if tries > 5:
+                        break
+                if tries > 5:
+                    self.message.emit("\nError in filtering features (same count for initial features and date-filtered features)\n")
+                    continue 
+                self.message.emit(f" ({len(curr_selected_feature_ids)} Features)\n")
                 # for now it is unfortunately not possible using the topology checker
                 # from pyqgs
                 # https://gis.stackexchange.com/questions/280296/accessing-python-module-for-qgis-3-0-topology-checker-from-python-script
@@ -392,10 +409,12 @@ class TimeEditorInspectionWorker(QtCore.QObject):
             all_features = self.layer.getFeatures(featureRequest)
             all_features = [feature for feature in all_features]
 
+            # only keep features that where selected
             if self.layer.selectedFeatureCount() > 0:
                 all_selected_features_ids = self.layer.selectedFeatureIds()
-                all_features = [feature for feature in all_features if feature.id() in all_selected_features_ids]
-                # Dead code: 
+                all_features = [feature for feature in all_features 
+                        if feature.id() in all_selected_features_ids]
+            # Dead code: 
                 # Tried to extent the expression and pass the selected ids to the expression
                 # all_feature_ids_as_str = ", ".join([str(_id) for _id in all_features_ids])
                 # extended_expression = self.filter_expression + f' and array_contains(array({all_feature_ids_as_str}), "fid")'
