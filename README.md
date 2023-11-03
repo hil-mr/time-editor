@@ -1,5 +1,7 @@
 # Time Editor (QGIS Plugin)
 
+![](time-editor.svg)
+
 Time Editor is a [QGIS](https://qgis.org/)-plugin to facilitate the editing of geometric features with 
 time information encoded in its attributes. It provides workflows for editing and 
 functions to check the spatial and temporal topology. 
@@ -17,7 +19,6 @@ flagged as experimental so you will need to check the box in the settings to fin
 Now you can find the plugin by searching "TimeEditor" (no spaces) in the QGIS repository. 
 
 ![](doc_images/installation-dialog.png)
-
 
 ## How to use
 
@@ -54,3 +55,8 @@ to a specific timestamp. The following pictures illustrates the result for the v
 ![](doc_images/schwalm-eder-filter-1930.png)
 
 
+## Image Credit 
+
+The Time-Editor Logo is heavily based on the Material Icons [Update](https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Aupdate%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4024) and 
+[edit](https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Aupdate%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4024) released 
+under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). 
