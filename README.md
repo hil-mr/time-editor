@@ -16,7 +16,7 @@ flagged as experimental so you will need to check the box in the settings to fin
 
 ![](doc_images/installation-experimental.png)
 
-Now you can find the plugin by searching "TimeEditor" (no spaces) in the QGIS repository. 
+Now you can find the plugin by searching "Time Editor" in the QGIS repository. 
 
 ![](doc_images/installation-dialog.png)
 
