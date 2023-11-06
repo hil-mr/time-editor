@@ -22,6 +22,7 @@ hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
 changelog=0.5.0: Feature: Add option to create a csv-file via the settings for whitelisting missing dates. Feature-ids that are added to the list do not create an error. 
         Feature: Better error reporting for 'Time Integrity' checks
+        Feature: Output of QGIS Geomtry Validation for 'Geometry Integrity'
         Fix: remove regression, invalid dates where not reported to the 'Time Integrity' script due to changed return of validate_date_string function
     0.4.8: Fix: in some cases the initial filter in the spatial integrity check has not been applied 
         leading to an expensive check of all (selected) features with lots of intersections. The fix enters 

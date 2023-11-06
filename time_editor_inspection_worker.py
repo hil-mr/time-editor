@@ -382,15 +382,18 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                 if idx % step == 0:
                     self.progress.emit(int(idx / float(feature_count) * 100))
                 if not feature.geometry().isGeosValid():
+                    errors = feature.geometry().validateGeometry()
+                    errors = [error.what() for error in errors]
                     self.validationIssue.emit([
                         feature.id(),
-                        ''
+                        "\n".join(errors)
                     ])
                     # self.message.emit(f"Feature {feature.id()} is not valid\n")
                     all_valid = False
             if not self.killed:
                 if all_valid:
                     self.message.emit("All Features are geometrically valid.")
+
                 self.progress.emit(100)
 
         # except Exception as e:
