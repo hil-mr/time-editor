@@ -48,8 +48,8 @@ class TimeEditorInspectDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.BOX_COL_INFO = [
             {
-                "headers": ["fid", "shared_id", "reason"],
-                "types": ["Integer", "string", "string"]
+                "headers": ["fid", "fid2", "shared_id", "reason"],
+                "types": ["Integer", "integer", "string", "string"]
             },
             {
                 "headers": ["fid", "attribute", "reason"],

@@ -67,17 +67,15 @@ class TimeEditorInspectionWorker(QtCore.QObject):
 
         all_features = self._get_all_features()
 
-        # Time variables Checking
+        # CASE 1: Handle Time Integrity Date Checking
         if self.check_type_idx == 0:
+            # ensures that script only runs once per common id
             checked_common_ids = []
             idx = 0
             # Step is the number of features
             step = feature_count // 100
             if step == 0:
                 step = 5
-            # TODO: Better use something like SQL's DISTINCT?
-            # like this the same linked features will be multiple times checked
-            # GITLAB-ISSUE: https://gitlab.uni-marburg.de/partner/hlgl/historische-karten/time-editor/-/issues/5
             for feature in all_features:
                 if self.killed:
                     break
@@ -148,10 +146,11 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                                 # print(date)
                                 if not self.date_helper.dates_touch(prev_date_val[1], date_val[0]):
                                     self.validationIssue.emit([
+                                        prev_date_val[2],
                                         date_val[2],
                                         date_val[3],
                                         # TODO: Add more information for csv export
-                                        self.tr("Wrong Date History")
+                                        self.tr(f"End date '{prev_date_val[1]}' of {prev_date_val[2]} and start date '{date_val[0]}' of {date_val[2]} are not adjacent")
                                     ])
                                     all_date_series_valid = False
 
@@ -162,7 +161,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                         self.tr("Date history is valid for all features"))
                 self.progress.emit(100)
 
-        # Handle single feature date check
+        # CASE 2: Handle single feature date check
         elif self.check_type_idx == 1:
             all_dates_are_valid = True
             idx = 0
@@ -196,7 +195,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                 self.progress.emit(100)
                 if all_dates_are_valid:
                     self.message.emit(self.tr("All dates are valid"))
-        # Handle spatial check
+        # CASE 3: Handle spatial integrity check
         elif self.check_type_idx == 2:
             all_dates = []
             # getFeatures() will return an iterator, the plugin exhausts it once 
@@ -349,7 +348,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
             if not self.killed:
                 self.progress.emit(100)
 
-        # Simple valididty check (using isGeosValid())
+        # Case 4: Simple geometry valididty check (using isGeosValid())
         elif self.check_type_idx == 3:
             idx = 0
             step = 5
