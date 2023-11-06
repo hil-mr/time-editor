@@ -11,15 +11,25 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Time Editor Attributes</string>
+   <string>Time Editor Settings</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0">
+    <widget class="QDialogButtonBox" name="button_box">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="headingLabel">
        <property name="text">
-        <string>Attribute Selection for: </string>
+        <string>Settings for Layer: </string>
        </property>
       </widget>
      </item>
@@ -85,22 +95,27 @@
      <item>
       <widget class="QComboBox" name="commonIdComboBox"/>
      </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Exception List for 'Time Integrity' checks (optional)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QgsFileWidget" name="mQgsFileWidget"/>
+     </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <widget class="QDialogButtonBox" name="button_box">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
-  <zorder>verticalLayoutWidget</zorder>
-  <zorder>button_box</zorder>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QgsFileWidget</class>
+   <extends>QWidget</extends>
+   <header>qgsfilewidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

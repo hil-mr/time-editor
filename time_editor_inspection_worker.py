@@ -1,4 +1,6 @@
-import traceback
+import csv
+import os
+import time
 
 from PyQt5 import QtCore
 # from PyQt5.QtCore import QObject
@@ -8,9 +10,6 @@ from qgis.PyQt.QtCore import QCoreApplication
 
 from .time_editor_date_helper import TimeEditorDateHelper
 
-import time
-
-import pdb
 # also import pyqtRemoveInputHook
 from qgis.PyQt.QtCore import pyqtRemoveInputHook
 
@@ -59,6 +58,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
         life_end_idx = self.layer.dataProvider().fieldNameIndex(life_end_name)
         common_id_name = self.layer.customProperty("te_common_id")
         common_id_idx = self.layer.dataProvider().fieldNameIndex(common_id_name)
+        
         # TODO: old code, could use simple length from _get_all_features
         if self.layer.selectedFeatureCount() > 0:
             feature_count = self.layer.selectedFeatureCount()
@@ -69,6 +69,21 @@ class TimeEditorInspectionWorker(QtCore.QObject):
 
         # CASE 1: Handle Time Integrity Date Checking
         if self.check_type_idx == 0:
+            # Load the csv file 
+            time_integrity_exception_path = self.layer.customProperty("te_exception_csv_file")
+            # id_exceptions is a simple list of concatenated strings 
+            # of fids that are allowed to have a time gap, e.g. '313-314',
+            # '320-391'
+            # Any found Time Integrity issue will be checked against that list
+            time_integrity_id_exceptions = []
+            if os.path.exists(time_integrity_exception_path):
+                with open(time_integrity_exception_path) as fh:
+                    reader = csv.DictReader(fh)
+                    for row in reader:
+                        curr_ids = [int(row['fid1']), int(row['fid2'])]
+                        curr_ids.sort()
+                        id_exception = str(curr_ids[0]) + '-' + str(curr_ids[1])
+                        time_integrity_id_exceptions.append(id_exception)
             # ensures that script only runs once per common id
             checked_common_ids = []
             idx = 0
@@ -145,14 +160,20 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                             if date_idx:
                                 # print(date)
                                 if not self.date_helper.dates_touch(prev_date_val[1], date_val[0]):
-                                    self.validationIssue.emit([
-                                        prev_date_val[2],
-                                        date_val[2],
-                                        date_val[3],
-                                        # TODO: Add more information for csv export
-                                        self.tr(f"End date '{prev_date_val[1]}' of {prev_date_val[2]} and start date '{date_val[0]}' of {date_val[2]} are not adjacent")
-                                    ])
-                                    all_date_series_valid = False
+                                    # build an exception id string and check if 
+                                    # it is in the csv-exceptions
+                                    curr_ids = [prev_date_val[2], date_val[2]]
+                                    curr_ids.sort()
+                                    curr_id_exception = f"{curr_ids[0]}-{curr_ids[1]}"
+                                    if curr_id_exception not in time_integrity_id_exceptions:
+                                        self.validationIssue.emit([
+                                            prev_date_val[2],
+                                            date_val[2],
+                                            date_val[3],
+                                            # TODO: Add more information for csv export
+                                            self.tr(f"End date '{prev_date_val[1]}' of {prev_date_val[2]} and start date '{date_val[0]}' of {date_val[2]} are not adjacent")
+                                        ])
+                                        all_date_series_valid = False
 
                             prev_date_val = date_val
             if not self.killed:

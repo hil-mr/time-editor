@@ -201,7 +201,7 @@ class TimeEditor:
         icon_path = ':/plugins/time_editor/icon.png'
         self.main_action = self.add_action(
             icon_path,
-            text=self.tr(u'Time Editor'),
+            text=self.tr(u'Time Editor Settings'),
             callback=self.run,
             parent=self.iface.mainWindow())
 

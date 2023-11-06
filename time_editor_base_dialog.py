@@ -75,8 +75,12 @@ class TimeEditorBaseDialog(QtWidgets.QDialog, FORM_CLASS):
         self._setValueFromCustomProperty(
             self.documentationComboBox, "te_documentation")
         self._setValueFromCustomProperty(self.commonIdComboBox, "te_common_id")
+        self._setFileFromCustomProperty(self.mQgsFileWidget, 'te_exception_csv_file')
+
         for box in self.boxes:
             box.currentTextChanged.connect(self._check_duplicates)
+
+        # self.mQgsFileWidget.fileChanged.connect()
 
     # Taken from plugin builder generated main file
     # noinspection PyMethodMayBeStatic
@@ -93,6 +97,10 @@ class TimeEditorBaseDialog(QtWidgets.QDialog, FORM_CLASS):
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('TimeEditor', message)
+        
+    def _setFileFromCustomProperty(self, fileChooser, layer_property):
+        if self.layer.customProperty(layer_property):
+            fileChooser.setFilePath(self.layer.customProperty(layer_property))
 
     def _setValueFromCustomProperty(self, box, layer_property):
         if self.layer.customProperty(layer_property):
@@ -136,6 +144,14 @@ class TimeEditorBaseDialog(QtWidgets.QDialog, FORM_CLASS):
                 "te_documentation", self.documentationComboBox.currentText())
             self.layer.setCustomProperty(
                 "te_common_id", self.commonIdComboBox.currentText())
+            csv_path = self.mQgsFileWidget.filePath()
+            self.layer.setCustomProperty(
+                "te_exception_csv_file", csv_path)
+            # create the CSV exception file if not present yet
+            if not os.path.exists(csv_path):
+                with open(csv_path, "w+") as fh:
+                    fh.write("fid1,fid2,comment\n")
+                    fh.close()
 
             # TODO: this does not look like best practice: how to
             # intercept QDialog on OK?
