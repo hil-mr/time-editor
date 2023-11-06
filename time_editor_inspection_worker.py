@@ -94,6 +94,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                         common_id_name=common_id_name,
                         common_id_value=curr_common_id
                     )
+                    # take a possibly existing user filter into account
                     if (self.filter_expression):
                         sub_feature_expression = self.filter_expression + " and " + sub_feature_expression
                     all_sub_features = self.layer.getFeatures(sub_feature_expression)
@@ -104,9 +105,12 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                             sub_feature.fieldNameIndex(life_start_name))
                         current_life_end = sub_feature.attribute(
                             sub_feature.fieldNameIndex(life_end_name))
-                        if not self.date_helper.validate_date_string(current_life_start) or not self.date_helper.validate_date_string(current_life_end):
+                        # Check if the date is valid for comparison / else abort
+                        if not self.date_helper.validate_date_string(current_life_start)[0] \
+                            or \
+                        not self.date_helper.validate_date_string(current_life_end)[0]:
                             self.message.emit(
-                                self.tr("Error: You have invalid dates. Please fix those dates before running this script"))
+                                self.tr("Error: You have invalid dates. Please fix those dates using 'Date Integrity' before running this script."))
                             self.message.emit(
                                 self.date_helper.validate_date_string(
                                     current_life_start)[0]
@@ -116,10 +120,10 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                                     current_life_end)[0]
                             )
                             return
+                        # TODO: Write utility function to safely retrieve attributes
                         if not isinstance(current_life_start, str):
                             if current_life_start.isNull():
                                 current_life_start = ''
-                        # TODO: Write utility function to safely retrieve attributes
                         if not isinstance(current_life_end, str):
                             if current_life_end.isNull():
                                 current_life_end = ''
@@ -140,11 +144,6 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                         # iterate over all collected dates to check validity
                         prev_date_val = [None, None]
                         for date_idx, date_val in enumerate(curr_date_vals):
-                            if not self.date_helper.validate_date_string(date_val[1]) or not self.date_helper.validate_date_string(date_val[0]):
-                                self.message.emit(
-                                    self.tr("You have invalid dates. Please fix them using 'Date Integrity'"))
-                                all_date_series_valid = False
-                                self.kill()
                             if date_idx:
                                 # print(date)
                                 if not self.date_helper.dates_touch(prev_date_val[1], date_val[0]):
