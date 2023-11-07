@@ -59,13 +59,9 @@ class TimeEditorInspectionWorker(QtCore.QObject):
         common_id_name = self.layer.customProperty("te_common_id")
         common_id_idx = self.layer.dataProvider().fieldNameIndex(common_id_name)
         
-        # TODO: old code, could use simple length from _get_all_features
-        if self.layer.selectedFeatureCount() > 0:
-            feature_count = self.layer.selectedFeatureCount()
-        else:
-            feature_count = self.layer.featureCount()
-
         all_features = self._get_all_features()
+        feature_count = len(all_features)
+        
 
         # CASE 1: Handle Time Integrity Date Checking
         if self.check_type_idx == 0:
@@ -267,11 +263,13 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                 self.progress.emit(round(date_idx / len(all_dates) * 100))
                 filter_str = self.date_helper.build_filter_string(
                     self.layer, date)
-                filter_str += f"""\n AND "fid" in ({initial_id_selection_str})"""
+                # extend the filter by initially selected ids
+                if len(initial_id_selection) > 0:
+                    filter_str += f"""\n AND "fid" in ({initial_id_selection_str})"""
                 self.layer.setSubsetString(filter_str)
                 self.refreshMap.emit()
                 
-                # get all currently selected features due to the layer filter
+                # get all currently available features due to the layer filter
                 curr_selected_feature_ids = [feature.id() for feature in self._get_all_features()]
                 # in some cases the processing of the layer substring is apparently not 
                 # ready and all initial (selected) features will be returned leading 
