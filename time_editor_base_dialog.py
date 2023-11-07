@@ -148,7 +148,7 @@ class TimeEditorBaseDialog(QtWidgets.QDialog, FORM_CLASS):
             self.layer.setCustomProperty(
                 "te_exception_csv_file", csv_path)
             # create the CSV exception file if not present yet
-            if not os.path.exists(csv_path):
+            if not os.path.exists(csv_path) and csv_path.strip() != "":
                 with open(csv_path, "w+") as fh:
                     fh.write("fid1,fid2,comment\n")
                     fh.close()

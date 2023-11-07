@@ -76,14 +76,15 @@ class TimeEditorInspectionWorker(QtCore.QObject):
             # '320-391'
             # Any found Time Integrity issue will be checked against that list
             time_integrity_id_exceptions = []
-            if os.path.exists(time_integrity_exception_path):
-                with open(time_integrity_exception_path) as fh:
-                    reader = csv.DictReader(fh)
-                    for row in reader:
-                        curr_ids = [int(row['fid1']), int(row['fid2'])]
-                        curr_ids.sort()
-                        id_exception = str(curr_ids[0]) + '-' + str(curr_ids[1])
-                        time_integrity_id_exceptions.append(id_exception)
+            if time_integrity_exception_path is not None:
+                if os.path.exists(time_integrity_exception_path):
+                    with open(time_integrity_exception_path) as fh:
+                        reader = csv.DictReader(fh)
+                        for row in reader:
+                            curr_ids = [int(row['fid1']), int(row['fid2'])]
+                            curr_ids.sort()
+                            id_exception = str(curr_ids[0]) + '-' + str(curr_ids[1])
+                            time_integrity_id_exceptions.append(id_exception)
             # ensures that script only runs once per common id
             checked_common_ids = []
             idx = 0

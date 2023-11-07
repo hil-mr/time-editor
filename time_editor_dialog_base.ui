@@ -103,7 +103,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QgsFileWidget" name="mQgsFileWidget"/>
+      <widget class="QgsFileWidget" name="mQgsFileWidget">
+       <property name="relativeStorage">
+        <enum>QgsFileWidget::Absolute</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
