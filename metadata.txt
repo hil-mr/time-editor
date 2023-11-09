@@ -62,7 +62,7 @@ changelog=0.5.0: Feature: Add option to create a csv-file via the settings for w
 # Tags are comma separated with spaces allowed
 tags=python
 
-homepage=https://github.com/hil-mr/time-editor/blob/main/README.md
+homepage=https://wms.hlgl.uni-marburg.de/docs/time-editor/docs/tutorial-basics/installation
 category=Vector
 icon=icon.png
 # experimental flag
