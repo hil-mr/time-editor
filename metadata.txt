@@ -6,7 +6,7 @@
 name=Time Editor
 qgisMinimumVersion=3.16
 description=Used to facilitate the editing of features with lifespan information
-version=0.5.0
+version=0.5.1
 author=Niklas Alt
 email=niklas.alt [at] uni-marburg.de
 
