@@ -52,6 +52,8 @@ class TimeEditorInspectionWorker(QtCore.QObject):
         # TODO: better error handling (too large try ... except block)
         # try:
         all_date_series_valid = True
+        pkey_name = self.layer.customProperty("te_pkey")
+        pkey_index = self.layer.dataProvider().fieldNameIndex(pkey_name)
         life_start_name = self.layer.customProperty("te_time_start")
         life_start_idx = self.layer.dataProvider().fieldNameIndex(life_start_name)
         life_end_name = self.layer.customProperty("te_time_end")
@@ -95,8 +97,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                 if idx % step == 0:
                     self.progress.emit(int(idx / float(feature_count) * 100))
 
-                curr_common_id = feature.attribute(
-                    feature.fieldNameIndex(common_id_name))
+                curr_common_id = feature.attribute(common_id_idx)
                 if curr_common_id not in checked_common_ids:
                     checked_common_ids.append(curr_common_id)
                     # use current selection plus possibly existing expression 
@@ -111,10 +112,9 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                     # Collect all date vals to check for inconsistencies
                     curr_date_vals = []
                     for sub_feature in all_sub_features:
-                        current_life_start = sub_feature.attribute(
-                            sub_feature.fieldNameIndex(life_start_name))
-                        current_life_end = sub_feature.attribute(
-                            sub_feature.fieldNameIndex(life_end_name))
+                        current_life_start = sub_feature.attribute(life_start_idx)
+                        current_life_end = sub_feature.attribute(life_end_idx)
+                        current_id = sub_feature.attribute(pkey_index)
                         # Check if the date is valid for comparison / else abort
                         if not self.date_helper.validate_date_string(current_life_start)[0] \
                             or \
@@ -141,9 +141,8 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                         curr_date_vals.append([
                             current_life_start,
                             current_life_end,
-                            sub_feature.id(),
-                            sub_feature.attribute(
-                                sub_feature.fieldNameIndex(common_id_name))
+                            current_id,
+                            sub_feature.attribute(common_id_idx)
                         ])
                     # Only check if more than one feature
                     # TODO: Should we make sanity checks for single timespan features?
@@ -198,14 +197,14 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                 if not has_valid_start_date:
                     all_dates_are_valid = False
                     self.validationIssue.emit([
-                        feature.id(),
+                        feature.attribute(pkey_index),
                         self.tr("Invalid Start Date"),
                         start_date_error,
                     ])
                 if not has_valid_end_date:
                     all_dates_are_valid = False
                     self.validationIssue.emit([
-                        feature.id(),
+                        feature.attribute(pkey_index),
                         self.tr("Invalid End Date"),
                         end_date_error
                     ])
@@ -268,6 +267,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                     self.layer, date)
                 # extend the filter by initially selected ids
                 if len(initial_id_selection) > 0:
+                    # TODO: need to use custom value
                     filter_str += f"""\n AND "fid" in ({initial_id_selection_str})"""
                 self.layer.setSubsetString(filter_str)
                 self.refreshMap.emit()
@@ -349,7 +349,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                                                     sub_geom.asWkt().replace("Polygon", "").strip())
                                         intersection_wkt = "MULTIPOLYGON(" + ",".join(
                                             sub_polys) + ")"
-
+                                    # TODO: use actual user defined pkey 
                                     self.validationIssue.emit([
                                         feature_id,
                                         sub_feature_id,
@@ -387,7 +387,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                     errors = feature.geometry().validateGeometry()
                     errors = [error.what() for error in errors]
                     self.validationIssue.emit([
-                        feature.id(),
+                        feature.attribute(pkey_index),
                         "\n".join(errors)
                     ])
                     # self.message.emit(f"Feature {feature.id()} is not valid\n")

@@ -20,7 +20,10 @@ repository=https://github.com/hil-mr/time-editor
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=0.5.0: Feature: Add option to create a csv-file via the settings for whitelisting missing dates. Feature-ids that are added to the list do not create an error. 
+changelog=0.5.1: Fix: Time integrity check now actually uses the user defined pkey (used to call .id()), 
+            correct handling in spatial integrity check still missing (reports .id())
+        Fix: unused fuzzy data transformation caused spatial integrity check to crash
+    0.5.0: Feature: Add option to create a csv-file via the settings for whitelisting missing dates. Feature-ids that are added to the list do not create an error. 
         Feature: Better error reporting for 'Time Integrity' checks
         Feature: Output of QGIS Geomtry Validation for 'Geometry Integrity'
         Fix: remove regression, invalid dates where not reported to the 'Time Integrity' script due to changed return of validate_date_string function
