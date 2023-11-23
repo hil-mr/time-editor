@@ -20,7 +20,8 @@ repository=https://github.com/hil-mr/time-editor
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=0.5.1: Fix: Time integrity check now actually uses the user defined pkey (used to call .id()), 
+changelog=0.5.1: Feature: Temporary edit layers have set an initial opacity (0.4)
+        Fix: Time integrity check now actually uses the user defined pkey (used to call .id()), 
             correct handling in spatial integrity check still missing (reports .id())
         Fix: unused fuzzy data transformation caused spatial integrity check to crash
     0.5.0: Feature: Add option to create a csv-file via the settings for whitelisting missing dates. Feature-ids that are added to the list do not create an error. 

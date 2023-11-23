@@ -596,6 +596,7 @@ class TimeEditor:
                 tmp_layer = QgsVectorLayer("MultiPolygon?crs={proj_id}".format(
                     proj_id=layer.crs().authid()
                 ), "Temporary Edit Layer", "memory", )
+                tmp_layer.setOpacity(0.4)
                 tmp_layer_data_provider = tmp_layer.dataProvider()
                 # Unnecessary, keep track of new geometries with .id() and .setId()
                 tmp_field_defs = [QgsField("fid", QVariant.Int)]
