@@ -21,6 +21,7 @@ repository=https://github.com/hil-mr/time-editor
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
 changelog=0.5.1: Feature: Temporary edit layers have set an initial opacity (0.4)
+        Fix: Show minimum intersection only on spatial integrity dropdown
         Fix: Time integrity check now actually uses the user defined pkey (used to call .id()), 
             correct handling in spatial integrity check still missing (reports .id())
         Fix: unused fuzzy data transformation caused spatial integrity check to crash

@@ -54,7 +54,7 @@
       <widget class="QgsFieldExpressionWidget" name="mFieldExpressionWidget"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="labelMinIntersection">
        <property name="text">
         <string>Minum Intersection (CRS-units squared, e.g. m²)</string>
        </property>

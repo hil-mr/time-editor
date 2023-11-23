@@ -179,8 +179,12 @@ class TimeEditorInspectDialog(QtWidgets.QDialog, FORM_CLASS):
         # self.tableWidget.horizontalHeader.
         if box_index == 2:
             self.progressBarFeature.show()
+            self.labelMinIntersection.show()
+            self.doubleSpinBox.show()
         else:
             self.progressBarFeature.hide()
+            self.labelMinIntersection.hide()
+            self.doubleSpinBox.hide()
 
     def refreshCanvas(self):
         self.iface.mapCanvas().refresh()
