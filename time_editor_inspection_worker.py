@@ -234,11 +234,14 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                 curr_start_date = feature.attribute(life_start_idx)
                 curr_end_date = feature.attribute(life_end_idx)
                 if isinstance(curr_start_date, str):
-                    curr_start_date = str(curr_start_date).replace("??", "99")
+                    # TODO: Better date handling 
+                    # Transformation to numerical representation was actually not used 
+                    # at this point
+                    # curr_start_date = str(curr_start_date).replace("??", "99")
                     if curr_start_date not in all_dates:
                         all_dates.append(curr_start_date)
                 if isinstance(curr_end_date, str):
-                    curr_end_date = str(curr_end_date).replace("??", "99")
+                    # curr_end_date = str(curr_end_date).replace("??", "99")
                     if curr_end_date not in all_dates:
                         all_dates.append(curr_end_date)
             all_dates.sort()
