@@ -25,10 +25,9 @@
 import csv
 import os
 
-from qgis.PyQt import uic
-from qgis.PyQt import QtWidgets
-from qgis.PyQt.QtCore import QThread, QCoreApplication
-from qgis.core import Qgis
+from qgis.core import Qgis, QgsMessageLog
+from qgis.PyQt import QtWidgets, uic
+from qgis.PyQt.QtCore import QCoreApplication, QThread
 
 # Import worker for threading
 from .time_editor_inspection_worker import TimeEditorInspectionWorker
@@ -138,19 +137,30 @@ class TimeEditorInspectDialog(QtWidgets.QDialog, FORM_CLASS):
     def stop_worker(self):
         self.abortButton.setEnabled(False)
         # TODO: Reset the previous state (resetting layer filter to '' and original selection)
+
         if self.worker:
             self.worker.kill()
             try:
                 self.worker.deleteLater()
-            except:
-                pass
+            except RuntimeError as e:
+                QgsMessageLog.logMessage(
+                    f"Could not delete worker: {e}",
+                    "Time Editor",
+                    Qgis.Warning
+                )
+
         if self.thread:
             try:
                 self.thread.quit()
                 self.thread.wait()
                 self.thread.deleteLater()
-            except:
-                pass
+            except RuntimeError as e:
+                QgsMessageLog.logMessage(
+                    f"Could not stop thread: {e}",
+                    "Time Editor",
+                    Qgis.Warning
+                )
+
         self.tableWidget.setSortingEnabled(True)
 
 
