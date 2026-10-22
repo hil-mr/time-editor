@@ -6,7 +6,7 @@
 name=Time Editor
 qgisMinimumVersion=3.16
 description=Used to facilitate the editing of features with lifespan information
-version=0.5.1
+version=0.5.2
 author=Niklas Alt
 email=niklas.alt [at] uni-marburg.de
 
@@ -20,7 +20,8 @@ repository=https://github.com/hil-mr/time-editor
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=0.5.1: Feature: Temporary edit layers have set an initial opacity (0.4)
+changelog=0.5.2: Fix: remove hardcoded "fid" field 
+    0.5.1: Feature: Temporary edit layers have set an initial opacity (0.4)
         Fix: Show minimum intersection only on spatial integrity dropdown
         Fix: Time integrity check now actually uses the user defined pkey (used to call .id()), 
             correct handling in spatial integrity check still missing (reports .id())

@@ -3,15 +3,18 @@ import os
 import time
 
 from PyQt5 import QtCore
-# from PyQt5.QtCore import QObject
-
-from qgis.core import QgsVectorLayer, QgsPolygon, Qgis, QgsExpression, QgsGeometryEngine, QgsFeatureRequest, QgsGeometry, QgsSpatialIndex
-from qgis.PyQt.QtCore import QCoreApplication
+from qgis.core import (Qgis, QgsExpression, QgsFeatureRequest, QgsGeometry,
+                       QgsGeometryEngine, QgsPolygon, QgsSpatialIndex,
+                       QgsVectorLayer)
+# also import pyqtRemoveInputHook
+from qgis.PyQt.QtCore import QCoreApplication, pyqtRemoveInputHook
 
 from .time_editor_date_helper import TimeEditorDateHelper
 
-# also import pyqtRemoveInputHook
-from qgis.PyQt.QtCore import pyqtRemoveInputHook
+# from PyQt5.QtCore import QObject
+
+
+
 
 class TimeEditorInspectionWorker(QtCore.QObject):
     """Worker to inspect a Layer for time and/or spatial consistency"""
@@ -268,7 +271,7 @@ class TimeEditorInspectionWorker(QtCore.QObject):
                 # extend the filter by initially selected ids
                 if len(initial_id_selection) > 0:
                     # TODO: need to use custom value
-                    filter_str += f"""\n AND "fid" in ({initial_id_selection_str})"""
+                    filter_str += f"""\n AND "{pkey_name}" in ({initial_id_selection_str})"""
                 self.layer.setSubsetString(filter_str)
                 self.refreshMap.emit()
                 
